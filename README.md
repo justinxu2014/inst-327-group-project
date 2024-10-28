@@ -61,5 +61,5 @@ IGNORE 1 ROWS
 [Source](https://github.com/propublica/il-tickets-notebooks/blob/master/README.md)
 
 ## DB Design Diagram 
-![ERD Diagram](https://inst-327-gp.s3.us-east-1.amazonaws.com/ERD+Diagram.svg)
+![ERD Diagram](https://inst-327-gp.s3.us-east-1.amazonaws.com/ERD+Diagram.svg?)
 
