@@ -59,3 +59,6 @@ IGNORE 1 ROWS
 * `hearing_reason`: The reason given for the hearing.
 
 [Source](https://github.com/propublica/il-tickets-notebooks/blob/master/README.md)
+
+## DB Design Diagram 
+![ERD Diagram](https://inst-327-gp.s3.us-east-1.amazonaws.com/ERD+Diagram.svg)
