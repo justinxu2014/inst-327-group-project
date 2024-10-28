@@ -16,7 +16,7 @@ CREATE TABLE citations (
 	violation_code VARCHAR(50),
 	violation_description VARCHAR(100),
 	unit VARCHAR(50),
-	unit_description VARCHAR(50),
+	unit_description VARCHAR(100),
 	officer VARCHAR(50), 
 	vehicle_make VARCHAR(10),
 	license_plate_type VARCHAR(10), 
