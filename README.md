@@ -62,3 +62,4 @@ IGNORE 1 ROWS
 
 ## DB Design Diagram 
 ![ERD Diagram](https://inst-327-gp.s3.us-east-1.amazonaws.com/ERD+Diagram.svg)
+
