@@ -16,7 +16,7 @@ SQL Workbench 8.0 blocks the import of local files by default. To rectify this, 
 ### Step 2:
 ![Step 2](https://inst-327-gp.s3.us-east-1.amazonaws.com/step+2.png "Step 2")
 
-## Running 
+## Unnormalized DB Creation
 
 ### Replace placeholder path with full local path to the csv file.
 ```SQL
@@ -30,10 +30,17 @@ IGNORE 1 ROWS
 ...
 ```
 
-### Run SQL Script in SQL Workbench 8.0
+### Run `DB Creation.sql` in SQL Workbench 8.0
 
   MacOS: `CMD + SHIFT + RETURN`\
   Windows: `CTRL + SHIFT + ENTER`
+
+## Normalized DB Creation 
+
+### Run `DB Normalized.sql` in SQL Workbench 8.0 after unnormalized DB initalization
+
+MacOS: `CMD + SHIFT + RETURN`\
+Windows: `CTRL + SHIFT + ENTER`
 
 ## Dataset Dictionary 
 * `notice_number`: a unique ID attached to the notice, if one was sent.
@@ -61,5 +68,5 @@ IGNORE 1 ROWS
 [Source](https://github.com/propublica/il-tickets-notebooks/blob/master/README.md)
 
 ## DB Design Diagram 
-![ERD Diagram](https://inst-327-gp.s3.us-east-1.amazonaws.com/ERD+Diagram.svg?)
+![ERD Diagram](https://inst-327-gp.s3.us-east-1.amazonaws.com/ERD+Diagram.svg)
 
