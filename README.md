@@ -37,7 +37,7 @@ IGNORE 1 ROWS
 
 ## Normalized DB Creation 
 
-### Run `DB Normalized.sql` in SQL Workbench 8.0 after unnormalized DB initalization
+### Run `DB Normalize.sql` in SQL Workbench 8.0 after unnormalized DB initalization
 
 MacOS: `CMD + SHIFT + RETURN`\
 Windows: `CTRL + SHIFT + ENTER`
@@ -70,3 +70,29 @@ Windows: `CTRL + SHIFT + ENTER`
 ## DB Design Diagram 
 ![ERD Diagram](https://inst-327-gp.s3.us-east-1.amazonaws.com/ERD+Diagram.svg?)
 
+## Additional Reources
+<details>
+<summary>Normalization Guide</summary>
+
+* #### 1NF 
+  * Break elements down into atomic values
+  ![NF1- Atomicity](https://inst-327-gp.s3.us-east-1.amazonaws.com/NF1-+Atomic.svg)
+  * Break down multi-value elements
+  ![NF1- Multi-Value Elements](https://inst-327-gp.s3.us-east-1.amazonaws.com/NF1-+Multi-Value+Elements.svg)
+  * Break down repeating columns
+  ![NF1- Repeating Columns](https://inst-327-gp.s3.us-east-1.amazonaws.com/NF1-+Repeating+Columns.svg)
+
+* #### 2NF 
+  * Remove partial dependencies (is a non-key attribute defined by only some of the key attributes?)
+    * Composite Key: Primary key comprises of 2 or more columns in a table.
+    * Found in tables with a composite key.
+    * Ex. Artist Name is defined by Artist ID and not Album ID. Album Name is defined by Album ID and not Artist ID.
+
+  ![NF2- Partial Dependencies](https://inst-327-gp.s3.us-east-1.amazonaws.com/NF2-+Partial+Dependencies.svg)
+
+* #### 3NF
+  * Remove transitive dependencies (Does a non-key attribute define another non-key attribute?)
+    * Ex. Song ID determines rating. Rating determines grade. Therefore Song ID transitively determines grade.
+
+    ![NF3- Transitive Dependencies](https://inst-327-gp.s3.us-east-1.amazonaws.com/NF3-+Transitive+Dependencies.svg)
+</details>
