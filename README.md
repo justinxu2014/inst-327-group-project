@@ -1,5 +1,5 @@
 # INST 327 Group Project Scripts
-A SQL script to import CSV data for INST 327 Group Project.
+Scripts and assets for INST 327 group project.
 
 ## Local Setup 
 
