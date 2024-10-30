@@ -71,7 +71,7 @@ Windows: `CTRL + SHIFT + ENTER`
 ![ERD Diagram](https://inst-327-gp.s3.us-east-1.amazonaws.com/ERD+Diagram.svg?)
 
 ## Additional Reources
-<details>
+<details open>
 <summary>Normalization Guide</summary>
 
 * #### 1NF 
