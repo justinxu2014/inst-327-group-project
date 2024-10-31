@@ -1,7 +1,51 @@
 # INST 327 Group Project Scripts
+
 Scripts and assets for INST 327 group project.
 
 ## Local Setup 
+
+<details> 
+  <summary>Guide to Git Installation and Github</summary> 
+
+  * <details> 
+      <summary>MacOS (> Mavericks 10.9)</summary>
+
+      #### Git installation
+
+      * Run git command `git --version` in terminal
+        ```zsh
+        git --version
+        ```
+
+      #### Clone Repository 
+      
+      * Navigate to directory in terminal using the `cd <directory path>` command
+        ```zsh
+        cd desktop
+        ```
+      * Run git command `git clone <repository url>` in terminal
+        ```zsh 
+        git clone https://github.com/justinxu2014/inst-327-group-project.git
+        ```
+      </details>
+  * <details >
+      <summary>Windows</summary>
+
+      #### Git installation
+      * Download and run installer from: https://git-scm.com/downloads/win
+
+      #### Clone Repository 
+      
+      * Navigate to directory in command prompt(CMD) using `cd <directory path>` command
+        ```console
+        cd desktop
+        ```
+      * Run git command `git clone <repository url>` in command promt(CMD)
+        ```console 
+        git clone https://github.com/justinxu2014/inst-327-group-project.git
+        ```
+    </details>
+</details>
 
 ### Add configuration to SQL Workbench 8.0
 
@@ -19,6 +63,7 @@ SQL Workbench 8.0 blocks the import of local files by default. To rectify this, 
 ## Unnormalized DB Creation
 
 ### Replace placeholder path with full local path to the csv file.
+
 ```SQL
 -- Replace placeholder file path with your local file path.
 LOAD DATA LOCAL INFILE "Full File Path/Chicago Traffic Citations.csv"  -- <- File Path Here
@@ -42,7 +87,8 @@ IGNORE 1 ROWS
 MacOS: `CMD + SHIFT + RETURN`\
 Windows: `CTRL + SHIFT + ENTER`
 
-## Dataset Dictionary 
+## Dataset Dictionary
+
 * `notice_number`: a unique ID attached to the notice, if one was sent.
 * `ticket_number`: a unique ID for each citation
 * `issue_date`: date and time the ticket was issued
@@ -68,13 +114,16 @@ Windows: `CTRL + SHIFT + ENTER`
 [Source](https://github.com/propublica/il-tickets-notebooks/blob/master/README.md)
 
 ## DB Design Diagram 
+
 ![ERD Diagram](https://inst-327-gp.s3.us-east-1.amazonaws.com/ERD+Diagram.svg?)
 
 ## Additional Reources
+
 <details open>
 <summary>Normalization Guide</summary>
 
-* #### 1NF 
+* #### 1NF
+
   * Break elements down into atomic values
   ![NF1- Atomicity](https://inst-327-gp.s3.us-east-1.amazonaws.com/NF1-+Atomic.svg)
   * Break down multi-value elements
@@ -82,7 +131,8 @@ Windows: `CTRL + SHIFT + ENTER`
   * Break down repeating columns
   ![NF1- Repeating Columns](https://inst-327-gp.s3.us-east-1.amazonaws.com/NF1-+Repeating+Columns.svg)
 
-* #### 2NF 
+* #### 2NF
+
   * Remove partial dependencies (is a non-key attribute defined by only some of the key attributes?)
     * Composite Key: Primary key comprises of 2 or more columns in a table.
     * Found in tables with a composite key.
@@ -91,6 +141,7 @@ Windows: `CTRL + SHIFT + ENTER`
   ![NF2- Partial Dependencies](https://inst-327-gp.s3.us-east-1.amazonaws.com/NF2-+Partial+Dependencies.svg)
 
 * #### 3NF
+
   * Remove transitive dependencies (Does a non-key attribute define another non-key attribute?)
     * Ex. Song ID determines rating. Rating determines grade. Therefore Song ID transitively determines grade.
 
