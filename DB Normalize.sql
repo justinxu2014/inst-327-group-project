@@ -305,11 +305,8 @@ UPDATE tickets JOIN hearing_reasons_link
 SET tickets.hearing_reason_id = hearing_reasons_link.id
 WHERE tickets.id = hearing_reasons_link.ticket_number;
 
--- Examine tickets 
-SELECT * FROM tickets; 
-
--- Compare citations query results to normalized database query results
-SELECT * FROM chicago.citations;
+-- Store combined table view
+CREATE VIEW chicago_norm_all AS 
 SELECT 
 	notices.notice_number AS notice_number,
 	tickets.id AS ticket_number,
@@ -352,4 +349,14 @@ FROM tickets
 	LEFT OUTER JOIN hearing_dispos
 		ON tickets.hearing_dispo_id = hearing_dispos.id
 	LEFT OUTER JOIN hearing_reasons
-		ON tickets.hearing_reason_id = hearing_reasons.id;
+		ON tickets.hearing_reason_id = hearing_reasons.id
+	ORDER BY notices.notice_number DESC;
+
+-- Examine tickets 
+SELECT * FROM tickets; 
+
+-- Compare citations query results to normalized database query results
+SELECT * FROM chicago.citations
+ORDER BY notice_number DESC;
+
+SELECT * FROM chicago_norm_all;
