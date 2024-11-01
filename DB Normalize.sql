@@ -110,9 +110,9 @@ CREATE TABLE tickets (
 	officer_id INT, 
 	vehicle_make_id INT,
 	license_plate_id INT,
+	notice_level_id INT,
 	hearing_dispo_id INT,
 	hearing_reason_id INT,
-  notice_level_id INT,
 	PRIMARY KEY (id),
 	FOREIGN KEY (notice_id) REFERENCES notices(id),
 	FOREIGN KEY (location_id) REFERENCES locations(id),
@@ -215,6 +215,12 @@ SELECT ticket_number, ticket_queue, ticket_queue_date
 FROM chicago.citations
 WHERE ticket_number IS NOT NULL;
 
+INSERT INTO notice_levels (notice_level)
+SELECT DISTINCT 
+	notice_level
+FROM chicago.citations
+WHERE notice_level IS NOT NULL;
+
 INSERT INTO hearing_dispos (hearing_dispo)
 SELECT DISTINCT 
 	hearing_dispo
@@ -226,12 +232,6 @@ SELECT DISTINCT
 	hearing_reason
 FROM chicago.citations
 WHERE hearing_reason IS NOT NULL;
-
-INSERT INTO notice_levels (notice_level)
-SELECT DISTINCT 
-	notice_level
-FROM chicago.citations
-WHERE notice_level IS NOT NULL;
 
 INSERT INTO tickets (
 	id, 
@@ -338,6 +338,18 @@ UPDATE tickets JOIN license_plate_types_link
 SET tickets.license_plate_id = license_plate_types_link.id
 WHERE tickets.id = license_plate_types_link.ticket_number;
 
+WITH notice_level_link AS (
+	SELECT DISTINCT
+		chicago.citations.ticket_number, 
+		notice_levels.id
+	FROM chicago.citations 
+		RIGHT JOIN notice_levels
+			ON chicago.citations.notice_level = notice_levels.notice_level
+)
+UPDATE tickets JOIN notice_level_link
+SET tickets.notice_level_id = notice_level_link.id
+WHERE tickets.id = notice_level_link.ticket_number;
+
 WITH hearing_dispos_link AS (
 	SELECT DISTINCT
 		chicago.citations.ticket_number,
@@ -383,9 +395,9 @@ SELECT
 	payments.total_payments,
 	queues.queue_status AS "ticket_queue",
 	queues.queue_date AS "ticket_queue_date",
+	notice_levels.notice_level,
 	hearing_dispos.hearing_dispo,
-	hearing_reasons.hearing_reason,
-  notice_levels.notice_level
+	hearing_reasons.hearing_reason
 FROM tickets
 	LEFT OUTER JOIN notices
 		ON tickets.notice_id = notices.id
