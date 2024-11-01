@@ -122,13 +122,13 @@ CREATE TABLE tickets (
 	FOREIGN KEY (officer_id) REFERENCES officers(id),
 	FOREIGN KEY (vehicle_make_id) REFERENCES vehicle_makes(id),
 	FOREIGN KEY (license_plate_id) REFERENCES license_plate_types(id),
-  FOREIGN KEY (id) REFERENCES fines(ticket_id),
-  FOREIGN KEY (id) REFERENCES dues(ticket_id),
+	FOREIGN KEY (id) REFERENCES fines(ticket_id),
+	FOREIGN KEY (id) REFERENCES dues(ticket_id),
 	FOREIGN KEY (id) REFERENCES payments(ticket_id),
 	FOREIGN KEY (id) REFERENCES queues(ticket_id),
 	FOREIGN KEY (hearing_dispo_id) REFERENCES hearing_dispos(id),
 	FOREIGN KEY (hearing_reason_id) REFERENCES hearing_reasons(id),
-  FOREIGN KEY (notice_level_id) REFERENCES notice_levels(id)
+	FOREIGN KEY (notice_level_id) REFERENCES notice_levels(id)
 );
 
 INSERT INTO notices (notice_number)
@@ -423,12 +423,12 @@ FROM tickets
 		ON tickets.id = payments.ticket_id
 	LEFT OUTER JOIN queues
 		ON tickets.id = queues.ticket_id
+	LEFT OUTER JOIN notice_levels
+		ON tickets.notice_level_id = notice_levels.id
 	LEFT OUTER JOIN hearing_dispos
 		ON tickets.hearing_dispo_id = hearing_dispos.id
 	LEFT OUTER JOIN hearing_reasons
 		ON tickets.hearing_reason_id = hearing_reasons.id
-	LEFT OUTER JOIN notice_levels
-		ON tickets.notice_level_id = notice_levels.id
 	ORDER BY notices.notice_number DESC, tickets.id DESC;
     
 -- Examine tickets 
