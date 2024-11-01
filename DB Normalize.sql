@@ -55,6 +55,32 @@ CREATE TABLE license_plate_types (
 	PRIMARY KEY (id)
 );
 
+CREATE TABLE fines (
+	ticket_id BIGINT,
+	fine_1 INT,
+    fine_2 INT,
+	PRIMARY KEY (ticket_id)
+);
+
+CREATE TABLE dues (
+	ticket_id BIGINT,
+	current_due DOUBLE,
+	PRIMARY KEY (ticket_id)
+);
+
+CREATE TABLE payments (
+	ticket_id BIGINT,
+	total_payments DOUBLE,
+	PRIMARY KEY (ticket_id)
+);
+
+CREATE TABLE queues (
+	ticket_id BIGINT,
+	queue_status VARCHAR(20),
+    queue_date DATE,
+	PRIMARY KEY (ticket_id)
+);
+
 CREATE TABLE hearing_dispos (
 	id INT NOT NULL AUTO_INCREMENT,
 	hearing_dispo VARCHAR(50),
@@ -64,6 +90,12 @@ CREATE TABLE hearing_dispos (
 CREATE TABLE hearing_reasons (
 	id INT NOT NULL AUTO_INCREMENT,
 	hearing_reason VARCHAR(100),
+	PRIMARY KEY (id)
+);
+
+CREATE TABLE notice_levels (
+	id INT NOT NULL AUTO_INCREMENT,
+	notice_level VARCHAR(10),
 	PRIMARY KEY (id)
 );
 
@@ -78,15 +110,9 @@ CREATE TABLE tickets (
 	officer_id INT, 
 	vehicle_make_id INT,
 	license_plate_id INT,
-	fine_1 INT,
-	fine_2 INT,
-	current_due DOUBLE,
-	total_payments DOUBLE,
-	ticket_queue VARCHAR(20),
-	ticket_queue_date DATE,
-	notice_level VARCHAR(10),
 	hearing_dispo_id INT,
 	hearing_reason_id INT,
+  notice_level_id INT,
 	PRIMARY KEY (id),
 	FOREIGN KEY (notice_id) REFERENCES notices(id),
 	FOREIGN KEY (location_id) REFERENCES locations(id),
@@ -96,8 +122,13 @@ CREATE TABLE tickets (
 	FOREIGN KEY (officer_id) REFERENCES officers(id),
 	FOREIGN KEY (vehicle_make_id) REFERENCES vehicle_makes(id),
 	FOREIGN KEY (license_plate_id) REFERENCES license_plate_types(id),
+  FOREIGN KEY (id) REFERENCES fines(ticket_id),
+  FOREIGN KEY (id) REFERENCES dues(ticket_id),
+	FOREIGN KEY (id) REFERENCES payments(ticket_id),
+	FOREIGN KEY (id) REFERENCES queues(ticket_id),
 	FOREIGN KEY (hearing_dispo_id) REFERENCES hearing_dispos(id),
-	FOREIGN KEY (hearing_reason_id) REFERENCES hearing_reasons(id)
+	FOREIGN KEY (hearing_reason_id) REFERENCES hearing_reasons(id),
+  FOREIGN KEY (notice_level_id) REFERENCES notice_levels(id)
 );
 
 INSERT INTO notices (notice_number)
@@ -150,6 +181,40 @@ SELECT DISTINCT
 FROM chicago.citations
 WHERE license_plate_type IS NOT NULL;
 
+INSERT INTO fines (
+	ticket_id,
+	fine_1,
+	fine_2
+)
+SELECT ticket_number, fine_1, fine_2
+FROM chicago.citations
+WHERE ticket_number IS NOT NULL;
+
+INSERT INTO dues (
+	ticket_id,
+	current_due
+)
+SELECT ticket_number, current_due
+FROM chicago.citations
+WHERE ticket_number IS NOT NULL;
+
+INSERT INTO payments (
+	ticket_id,
+	total_payments
+)
+SELECT ticket_number, total_payments
+FROM chicago.citations
+WHERE ticket_number IS NOT NULL;
+
+INSERT INTO queues (
+	ticket_id,
+	queue_status,
+  queue_date
+)
+SELECT ticket_number, ticket_queue, ticket_queue_date
+FROM chicago.citations
+WHERE ticket_number IS NOT NULL;
+
 INSERT INTO hearing_dispos (hearing_dispo)
 SELECT DISTINCT 
 	hearing_dispo
@@ -162,27 +227,19 @@ SELECT DISTINCT
 FROM chicago.citations
 WHERE hearing_reason IS NOT NULL;
 
+INSERT INTO notice_levels (notice_level)
+SELECT DISTINCT 
+	notice_level
+FROM chicago.citations
+WHERE notice_level IS NOT NULL;
+
 INSERT INTO tickets (
 	id, 
-	issue_date, 
-	fine_1, 
-	fine_2, 
-	current_due, 
-	total_payments, 
-	ticket_queue, 
-	ticket_queue_date, 
-	notice_level
+	issue_date
 ) 
 SELECT 
 	ticket_number, 
-	issue_date, 
-	fine_1, 
-	fine_2, 
-	current_due, 
-	total_payments, 
-	ticket_queue, 
-	ticket_queue_date, 
-	notice_level
+	issue_date
 FROM chicago.citations;
 
 WITH notices_link AS (
@@ -320,15 +377,15 @@ SELECT
 	officers.officer_id AS officer,
 	vehicle_makes.vehicle_make,
 	license_plate_types.license_plate_type,
-	tickets.fine_1,
-	tickets.fine_2,
-	tickets.current_due,
-	tickets.total_payments,
-	tickets.ticket_queue,
-	tickets.ticket_queue_date,
-	tickets.notice_level,
+	fines.fine_1,
+	fines.fine_2,
+	dues.current_due,
+	payments.total_payments,
+	queues.queue_status AS "ticket_queue",
+	queues.queue_date AS "ticket_queue_date",
 	hearing_dispos.hearing_dispo,
-	hearing_reasons.hearing_reason
+	hearing_reasons.hearing_reason,
+  notice_levels.notice_level
 FROM tickets
 	LEFT OUTER JOIN notices
 		ON tickets.notice_id = notices.id
@@ -346,17 +403,27 @@ FROM tickets
 		ON tickets.vehicle_make_id = vehicle_makes.id
 	LEFT OUTER JOIN license_plate_types
 		ON tickets.license_plate_id = license_plate_types.id
+	LEFT OUTER JOIN fines
+		ON tickets.id = fines.ticket_id
+	LEFT OUTER JOIN dues
+		ON tickets.id = dues.ticket_id
+	LEFT OUTER JOIN payments
+		ON tickets.id = payments.ticket_id
+	LEFT OUTER JOIN queues
+		ON tickets.id = queues.ticket_id
 	LEFT OUTER JOIN hearing_dispos
 		ON tickets.hearing_dispo_id = hearing_dispos.id
 	LEFT OUTER JOIN hearing_reasons
 		ON tickets.hearing_reason_id = hearing_reasons.id
-	ORDER BY notices.notice_number DESC;
-
+	LEFT OUTER JOIN notice_levels
+		ON tickets.notice_level_id = notice_levels.id
+	ORDER BY notices.notice_number DESC, tickets.id DESC;
+    
 -- Examine tickets 
 SELECT * FROM tickets; 
 
 -- Compare citations query results to normalized database query results
 SELECT * FROM chicago.citations
-ORDER BY notice_number DESC;
+ORDER BY notice_number DESC, ticket_number DESC;
 
 SELECT * FROM chicago_norm_all;

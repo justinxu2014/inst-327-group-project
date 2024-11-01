@@ -60,6 +60,9 @@ SQL Workbench 8.0 blocks the import of local files by default. To rectify this, 
 ### Step 2:
 ![Step 2](https://inst-327-gp.s3.us-east-1.amazonaws.com/step+2.png "Step 2")
 
+### Step 3:
+Restart MySQL Workbench 8.0
+
 ## Unnormalized DB Creation
 
 ### Replace placeholder path with full local path to the csv file.
