@@ -122,7 +122,7 @@ Windows: `CTRL + SHIFT + ENTER`
 
 ## Additional Reources
 
-<details open>
+<details>
 <summary>Normalization Guide</summary>
 
 * #### 1NF
