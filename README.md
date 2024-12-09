@@ -65,7 +65,7 @@ Restart MySQL Workbench 8.0
 
 ## Unnormalized DB Creation
 
-### Replace placeholder path with full local path to the csv file.
+Replace placeholder path with full local path to the csv file.
 
 ```SQL
 -- Replace placeholder file path with your local file path.
@@ -78,15 +78,15 @@ IGNORE 1 ROWS
 ...
 ```
 
-### Run `DB Creation.sql` in SQL Workbench 8.0
+Run `DB Creation.sql` in SQL Workbench 8.0
 
 ## Normalized DB Creation 
 
-### Run `DB Normalize.sql` in SQL Workbench 8.0 after unnormalized DB initalization
+Run `DB Normalize.sql` in SQL Workbench 8.0 after unnormalized DB initalization
 
 ## Create DB From Backup
 
-### Run `Normalized DB Backup.sql` in SQL Workbench 8.0
+Run `Normalized DB Backup.sql` in SQL Workbench 8.0
 
 ## Pre-defined Views For Normalized DB
 
