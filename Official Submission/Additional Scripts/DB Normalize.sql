@@ -394,19 +394,3 @@ WHERE officers.unit_id IN (
 	GROUP BY units.unit_id
     HAVING COUNT(officers.officer_id) < 5
     );
-    
--- Test Queries
--- Examine tickets 
-SELECT * FROM tickets; 
-
--- Compare citations query results to normalized database query results
-SELECT * FROM chicago.citations
-ORDER BY notice_number DESC, ticket_number DESC;
-
--- Test Views
-SELECT * FROM chicago_norm_all;
-SELECT * FROM officers_units_all;
-SELECT * FROM vehicle_makes_plate_types_all;
-SELECT * FROM tickets_per_notice;
-SELECT * FROM officers_per_unit;
-SELECT * FROM tickets_from_large_units;
